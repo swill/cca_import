@@ -71,3 +71,17 @@ object added: os_specific_packages/cca_import_windows_386.zip
 object added: os_specific_packages/cca_import_windows_amd64.zip
 ```
 
+
+CROSS COMPILING
+===============
+
+Using the script from source is not ideal, instead it should be compiled and the executable should be distributed.  Since this is written in Go (golang), it will have to be compiled for each OS independently.  There is an excellent package called `goxc` which enables you to compile for all OS platforms at the same time.
+
+Learn more about installing `goxc` at: [https://github.com/laher/goxc](https://github.com/laher/goxc)
+
+Compilation process:
+``` bash
+$ cd /path/to/cca_import
+$ goxc
+```
+
