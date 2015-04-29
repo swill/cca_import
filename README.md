@@ -1,7 +1,3 @@
-% Upload directory to Cloud.ca Object Store
-% Will Stevens
-% 2015/04/29
-
 
 SUMMARY
 =======
