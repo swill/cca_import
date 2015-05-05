@@ -15,15 +15,11 @@ var (
 	conn    swift.Connection
 )
 
-func upload(path string, f os.FileInfo, err error) error {
+func upload(path string, file_info os.FileInfo, err error) error {
 	obj_path := strings.TrimPrefix(path, abs_dir)                     // remove abs_dir from path
 	obj_path = strings.TrimPrefix(obj_path, string(os.PathSeparator)) // remove leading slash if it exists
 	if len(obj_path) > 0 {
-		is_dir, err := isDir(path)
-		if err != nil {
-			return err
-		}
-		if is_dir {
+		if file_info.IsDir() {
 			err = conn.ObjectPutString(*bucket, obj_path, "", "application/directory")
 			if err != nil {
 				return err
@@ -43,11 +39,6 @@ func upload(path string, f os.FileInfo, err error) error {
 		}
 	}
 	return nil
-}
-
-func isDir(path string) (bool, error) {
-	info, err := os.Stat(path)
-	return info.IsDir(), err
 }
 
 func main() {
