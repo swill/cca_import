@@ -1,9 +1,11 @@
 package main
 
 import (
+	"crypto/md5"
 	"flag"
 	"fmt"
 	"github.com/ncw/swift"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -26,19 +28,46 @@ func upload(path string, file_info os.FileInfo, err error) error {
 			}
 			fmt.Printf("directory created: %s\n", obj_path)
 		} else {
-			f, err := os.Open(path)
+			hash, err := getHash(path)
 			if err != nil {
 				return err
 			}
-			defer f.Close()
-			_, err = conn.ObjectPut(*bucket, obj_path, f, true, "", "", nil)
+			obj, _, err := conn.Object(*bucket, obj_path)
 			if err != nil {
 				return err
 			}
-			fmt.Printf("object added: %s\n", obj_path)
+			if obj.Hash != hash {
+				f, err := os.Open(path)
+				if err != nil {
+					return err
+				}
+				defer f.Close()
+				_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
+				if err != nil {
+					return err
+				}
+				fmt.Printf("object uploaded: %s\n", obj_path)
+			} else {
+				fmt.Printf("object unchanged: %s\n", obj_path)
+			}
+
 		}
 	}
 	return nil
+}
+
+func getHash(path string) (string, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return "", err
+	}
+	defer f.Close()
+	h := md5.New()
+	_, err = io.Copy(h, f)
+	if err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("%x", h.Sum(nil)), nil
 }
 
 func main() {
