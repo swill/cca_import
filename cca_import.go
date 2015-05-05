@@ -27,7 +27,7 @@ func upload(path string, file_info os.FileInfo, err error) error {
 			if err != nil {
 				return err
 			}
-			fmt.Printf("directory created: %s\n", obj_path)
+			fmt.Printf("directory: %s\n", obj_path)
 		} else {
 			if file_info.Mode().IsRegular() {
 				hash, err := getHash(path)
@@ -45,9 +45,9 @@ func upload(path string, file_info os.FileInfo, err error) error {
 					if err != nil {
 						return err
 					}
-					fmt.Printf("object uploaded: %s\n", obj_path)
+					fmt.Printf(" uploaded: %s\n", obj_path)
 				} else {
-					fmt.Printf("object unchanged: %s\n", obj_path)
+					fmt.Printf(" unchanged: %s\n", obj_path)
 				}
 			}
 		}
