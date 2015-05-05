@@ -20,6 +20,7 @@ var (
 func upload(path string, file_info os.FileInfo, err error) error {
 	obj_path := strings.TrimPrefix(path, abs_dir)                     // remove abs_dir from path
 	obj_path = strings.TrimPrefix(obj_path, string(os.PathSeparator)) // remove leading slash if it exists
+	obj_path = filepath.ToSlash(obj_path)                             // fix windows paths
 	if len(obj_path) > 0 {
 		if file_info.IsDir() {
 			err = conn.ObjectPutString(*bucket, obj_path, "", "application/directory")

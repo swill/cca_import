@@ -40,31 +40,31 @@ An example run would look like the following.
 ```
 $ ./cca_import -dir="/abs/or/rel/path/to/dir" -bucket="bucket_name" -identity="check_your_profile" -password="check_your_profile"
 directory created: os_specific_packages
-object added: os_specific_packages/cca_import_darwin_386.zip
-object added: os_specific_packages/cca_import_darwin_amd64.zip
-object added: os_specific_packages/cca_import_dragonfly_386.zip
-object added: os_specific_packages/cca_import_dragonfly_amd64.zip
-object added: os_specific_packages/cca_import_freebsd_386.zip
-object added: os_specific_packages/cca_import_freebsd_amd64.zip
-object added: os_specific_packages/cca_import_freebsd_arm.zip
-object added: os_specific_packages/cca_import_linux_386.tar.gz
-object added: os_specific_packages/cca_import_linux_amd64.tar.gz
-object added: os_specific_packages/cca_import_linux_arm.tar.gz
-object added: os_specific_packages/cca_import_nacl_386.zip
-object added: os_specific_packages/cca_import_nacl_amd64p32.zip
-object added: os_specific_packages/cca_import_nacl_arm.zip
-object added: os_specific_packages/cca_import_netbsd_386.zip
-object added: os_specific_packages/cca_import_netbsd_amd64.zip
-object added: os_specific_packages/cca_import_netbsd_arm.zip
-object added: os_specific_packages/cca_import_openbsd_386.zip
-object added: os_specific_packages/cca_import_openbsd_amd64.zip
-object added: os_specific_packages/cca_import_plan9_386.zip
-object added: os_specific_packages/cca_import_snapshot_amd64.deb
-object added: os_specific_packages/cca_import_snapshot_armhf.deb
-object added: os_specific_packages/cca_import_snapshot_i386.deb
-object added: os_specific_packages/cca_import_solaris_amd64.zip
-object added: os_specific_packages/cca_import_windows_386.zip
-object added: os_specific_packages/cca_import_windows_amd64.zip
+object uploaded: cca_import_darwin_386.zip
+object uploaded: cca_import_darwin_amd64.zip
+object uploaded: cca_import_dragonfly_386.zip
+object uploaded: cca_import_dragonfly_amd64.zip
+object uploaded: cca_import_freebsd_386.zip
+object uploaded: cca_import_freebsd_amd64.zip
+object uploaded: cca_import_freebsd_arm.zip
+object uploaded: cca_import_linux_386.tar.gz
+object uploaded: cca_import_linux_amd64.tar.gz
+object uploaded: cca_import_linux_arm.tar.gz
+object uploaded: cca_import_nacl_386.zip
+object uploaded: cca_import_nacl_amd64p32.zip
+object uploaded: cca_import_nacl_arm.zip
+object uploaded: cca_import_netbsd_386.zip
+object uploaded: cca_import_netbsd_amd64.zip
+object uploaded: cca_import_netbsd_arm.zip
+object uploaded: cca_import_openbsd_386.zip
+object uploaded: cca_import_openbsd_amd64.zip
+object uploaded: cca_import_plan9_386.zip
+object uploaded: cca_import_snapshot_amd64.deb
+object uploaded: cca_import_snapshot_armhf.deb
+object uploaded: cca_import_snapshot_i386.deb
+object uploaded: cca_import_solaris_amd64.zip
+object uploaded: cca_import_windows_386.zip
+object uploaded: cca_import_windows_amd64.zip
 ```
 
 
