@@ -39,7 +39,6 @@ An example run would look like the following.
 
 ```
 $ ./cca_import -dir="/abs/or/rel/path/to/dir" -bucket="bucket_name" -identity="check_your_profile" -password="check_your_profile"
-directory created: os_specific_packages
 object uploaded: cca_import_darwin_386.zip
 object uploaded: cca_import_darwin_amd64.zip
 object uploaded: cca_import_dragonfly_386.zip
