@@ -105,6 +105,8 @@ func main() {
 		fmt.Println(err)
 		os.Exit(2)
 	}
+	fmt.Printf("Using bucket: %s\n", *bucket)
+	fmt.Println("Starting upload...  This can take a while, go get a coffee.  :)")
 
 	// walk the specified directory and do the upload
 	err = filepath.Walk(abs_dir, upload)
