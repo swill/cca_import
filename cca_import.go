@@ -28,29 +28,27 @@ func upload(path string, file_info os.FileInfo, err error) error {
 			}
 			fmt.Printf("directory created: %s\n", obj_path)
 		} else {
-			hash, err := getHash(path)
-			if err != nil {
-				return err
-			}
-			obj, _, err := conn.Object(*bucket, obj_path)
-			if err != nil {
-				return err
-			}
-			if obj.Hash != hash {
-				f, err := os.Open(path)
+			if file_info.Mode().IsRegular() {
+				hash, err := getHash(path)
 				if err != nil {
 					return err
 				}
-				defer f.Close()
-				_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
-				if err != nil {
-					return err
+				obj, _, err := conn.Object(*bucket, obj_path)
+				if err != nil || obj.Hash != hash {
+					f, err := os.Open(path)
+					if err != nil {
+						return err
+					}
+					defer f.Close()
+					_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
+					if err != nil {
+						return err
+					}
+					fmt.Printf("object uploaded: %s\n", obj_path)
+				} else {
+					fmt.Printf("object unchanged: %s\n", obj_path)
 				}
-				fmt.Printf("object uploaded: %s\n", obj_path)
-			} else {
-				fmt.Printf("object unchanged: %s\n", obj_path)
 			}
-
 		}
 	}
 	return nil
