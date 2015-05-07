@@ -9,51 +9,19 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 )
+
+type Path struct {
+	file_path string
+	obj_path  string
+}
 
 var (
 	abs_dir string
 	bucket  *string
 	conn    swift.Connection
 )
-
-func upload(path string, file_info os.FileInfo, err error) error {
-	obj_path := strings.TrimPrefix(path, abs_dir)                     // remove abs_dir from path
-	obj_path = strings.TrimPrefix(obj_path, string(os.PathSeparator)) // remove leading slash if it exists
-	obj_path = filepath.ToSlash(obj_path)                             // fix windows paths
-	if len(obj_path) > 0 {
-		if file_info.IsDir() {
-			err = conn.ObjectPutString(*bucket, obj_path, "", "application/directory")
-			if err != nil {
-				return err
-			}
-			fmt.Printf("directory: %s\n", obj_path)
-		} else {
-			if file_info.Mode().IsRegular() {
-				hash, err := getHash(path)
-				if err != nil {
-					return err
-				}
-				obj, _, err := conn.Object(*bucket, obj_path)
-				if err != nil || obj.Hash != hash {
-					f, err := os.Open(path)
-					if err != nil {
-						return err
-					}
-					defer f.Close()
-					_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
-					if err != nil {
-						return err
-					}
-					fmt.Printf(" uploaded: %s\n", obj_path)
-				} else {
-					fmt.Printf(" unchanged: %s\n", obj_path)
-				}
-			}
-		}
-	}
-	return nil
-}
 
 func getHash(path string) (string, error) {
 	f, err := os.Open(path)
@@ -127,11 +95,84 @@ func main() {
 	fmt.Printf("Using bucket: %s\n", *bucket)
 	fmt.Println("Starting upload...  This can take a while, go get a coffee.  :)")
 
-	// walk the specified directory and do the upload
-	err = filepath.Walk(abs_dir, upload)
+	// walk the file system and pull out the important info (because 'Walk' is a blocking function)
+	dirs := make([]*Path, 0)
+	objs := make([]*Path, 0)
+	err = filepath.Walk(abs_dir, func(path string, info os.FileInfo, _ error) (err error) {
+		obj_path := strings.TrimPrefix(path, abs_dir)                     // remove abs_dir from path
+		obj_path = strings.TrimPrefix(obj_path, string(os.PathSeparator)) // remove leading slash if it exists
+		obj_path = filepath.ToSlash(obj_path)                             // fix windows paths
+		if len(obj_path) > 0 {
+			if info.IsDir() {
+				dirs = append(dirs, &Path{
+					obj_path: obj_path,
+				})
+			} else {
+				if info.Mode().IsRegular() {
+					objs = append(objs, &Path{
+						file_path: path,
+						obj_path:  obj_path,
+					})
+				}
+			}
+		}
+		return nil
+	})
 	if err != nil {
-		fmt.Println("\nERROR: Problem uploading a file\n")
+		fmt.Println("\nERROR: Problem discovering a file\n")
 		fmt.Println(err)
 		os.Exit(2)
 	}
+
+	// put all the dirs in place initially
+	var dir_wg sync.WaitGroup
+	for _, p := range dirs {
+		dir_wg.Add(1)
+		go func(obj_path string) error {
+			defer dir_wg.Done()
+			obj, _, err := conn.Object(*bucket, obj_path)
+			if err == nil && obj.ContentType == "application/directory" {
+				fmt.Printf("unchanged: %s\n", obj_path)
+			} else {
+				err = conn.ObjectPutString(*bucket, obj_path, "", "application/directory")
+				if err != nil {
+					return err
+				}
+				fmt.Printf("added dir: %s\n", obj_path)
+			}
+			return nil
+		}(p.obj_path)
+	}
+	dir_wg.Wait()
+
+	// now upload all the objects into the established dirs
+	var obj_wg sync.WaitGroup
+	for _, p := range objs {
+		obj_wg.Add(1)
+		go func(path, obj_path string) error {
+			defer obj_wg.Done()
+			hash, err := getHash(path)
+			if err != nil {
+				return err
+			}
+			obj, _, err := conn.Object(*bucket, obj_path)
+			if err != nil || obj.Hash != hash {
+				fmt.Printf("  started: %s\n", obj_path)
+				f, err := os.Open(path)
+				if err != nil {
+					return err
+				}
+				defer f.Close()
+				_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
+				if err != nil {
+					return err
+				}
+				fmt.Printf(" uploaded: %s\n", obj_path)
+			} else {
+				fmt.Printf(" unchanged: %s\n", obj_path)
+			}
+			return nil
+		}(p.file_path, p.obj_path)
+	}
+	obj_wg.Wait()
 }
