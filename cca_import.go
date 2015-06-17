@@ -136,6 +136,8 @@ func main() {
 			} else {
 				err = conn.ObjectPutString(*bucket, obj_path, "", "application/directory")
 				if err != nil {
+					fmt.Printf("\nERROR: Problem creating folder '%s'\n", obj_path)
+					fmt.Println(err)
 					return err
 				}
 				fmt.Printf("added dir: %s\n", obj_path)
@@ -153,6 +155,8 @@ func main() {
 			defer obj_wg.Done()
 			hash, err := getHash(path)
 			if err != nil {
+				fmt.Printf("\nERROR: Problem creating object hash\n")
+				fmt.Println(err)
 				return err
 			}
 			obj, _, err := conn.Object(*bucket, obj_path)
@@ -160,11 +164,15 @@ func main() {
 				fmt.Printf("  started: %s\n", obj_path)
 				f, err := os.Open(path)
 				if err != nil {
+					fmt.Printf("\nERROR: Problem opening file '%s'\n", path)
+					fmt.Println(err)
 					return err
 				}
 				defer f.Close()
 				_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
 				if err != nil {
+					fmt.Printf("\nERROR: Problem uploading object '%s'\n", obj_path)
+					fmt.Println(err)
 					return err
 				}
 				fmt.Printf(" uploaded: %s\n", obj_path)
