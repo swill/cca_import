@@ -1,6 +1,6 @@
 
-SUMMARY
-=======
+cca_import
+==========
 
 This is a cross platform tool which allows you to specify a directory and a bucket on the Cloud.ca object store and the directory will be uploaded to the specified bucket.  If the bucket does not exist, it will be created before uploading.
 
@@ -8,7 +8,7 @@ The code is not required to use the script.  The executables are already availab
 
 
 USAGE
-=====
+-----
 
 The usage documentation for the script is accessible through the `-h` or `-help` flags.
 
@@ -55,7 +55,7 @@ $ ./cca_import -dir="/abs/or/rel/path/to/dir" -bucket="bucket_name" -identity="c
 
 
 BUILDING FROM SOURCE
-====================
+--------------------
 
 If you want to run from source you would do the following.
 
@@ -68,7 +68,7 @@ $ ./cca_import -h
 
 
 CROSS COMPILING
-===============
+---------------
 
 Using the script from source is not ideal, instead it should be compiled and the executable should be distributed.  Since this is written in Go (golang), it will have to be compiled for each OS independently.  There is an excellent package called `goxc` which enables you to compile for all OS platforms at the same time.
 
