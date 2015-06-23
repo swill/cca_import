@@ -114,7 +114,9 @@ func main() {
 		obj_path := strings.TrimPrefix(path, abs_dir)                     // remove abs_dir from path
 		obj_path = strings.TrimPrefix(obj_path, string(os.PathSeparator)) // remove leading slash if it exists
 		if len(obj_path) > 0 {
-			obj_path = strings.Join([]string{pre_path, obj_path}, string(os.PathSeparator))
+			if pre_path != "" {
+				obj_path = strings.Join([]string{pre_path, obj_path}, string(os.PathSeparator))
+			}
 			obj_path = filepath.ToSlash(obj_path) // fix windows paths
 			if info.IsDir() {
 				dirs = append(dirs, &Path{
