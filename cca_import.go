@@ -18,9 +18,7 @@ type Path struct {
 }
 
 var (
-	abs_dir string
-	bucket  *string
-	conn    swift.Connection
+	conn swift.Connection
 )
 
 func getHash(path string) (string, error) {
@@ -40,10 +38,11 @@ func getHash(path string) (string, error) {
 func main() {
 	var err error
 	dir := flag.String("dir", "", "Absolute or relative path to a directory to be uploaded")
-	bucket = flag.String("bucket", "", "The container where the files should be uploaded")
+	bucket := flag.String("bucket", "", "The container where the files should be uploaded")
 	endpoint := flag.String("endpoint", "https://auth-east.cloud.ca/v2.0", "The Cloud.ca object storage public url")
 	identity := flag.String("identity", "", "Your Cloud.ca object storage identity")
 	password := flag.String("password", "", "Your Cloud.ca object storage password")
+	prefix := flag.String("prefix", "", "A prefix added to the path of each object uploaded to the bucket")
 	flag.Parse()
 
 	if *dir == "" || *bucket == "" || *identity == "" || *password == "" {
@@ -64,7 +63,7 @@ func main() {
 	}
 
 	// make dir absolute so it is easier to work with
-	abs_dir, err = filepath.Abs(*dir)
+	abs_dir, err := filepath.Abs(*dir)
 	if err != nil {
 		fmt.Println("\nERROR: Problem resolving the specified directory\n")
 		os.Exit(2)
@@ -98,11 +97,25 @@ func main() {
 	// walk the file system and pull out the important info (because 'Walk' is a blocking function)
 	dirs := make([]*Path, 0)
 	objs := make([]*Path, 0)
+	pre_path := strings.Trim(*prefix, string(os.PathSeparator))
+	pre_path_parts := strings.Split(pre_path, string(os.PathSeparator))
+	pre_dirs := ""
+	for i := 0; i < len(pre_path_parts); i++ {
+		if pre_dirs == "" {
+			pre_dirs = pre_path_parts[i]
+		} else {
+			pre_dirs = strings.Join([]string{pre_dirs, pre_path_parts[i]}, "/")
+		}
+		dirs = append(dirs, &Path{
+			obj_path: pre_dirs,
+		})
+	}
 	err = filepath.Walk(abs_dir, func(path string, info os.FileInfo, _ error) (err error) {
 		obj_path := strings.TrimPrefix(path, abs_dir)                     // remove abs_dir from path
 		obj_path = strings.TrimPrefix(obj_path, string(os.PathSeparator)) // remove leading slash if it exists
-		obj_path = filepath.ToSlash(obj_path)                             // fix windows paths
 		if len(obj_path) > 0 {
+			obj_path = strings.Join([]string{pre_path, obj_path}, string(os.PathSeparator))
+			obj_path = filepath.ToSlash(obj_path) // fix windows paths
 			if info.IsDir() {
 				dirs = append(dirs, &Path{
 					obj_path: obj_path,

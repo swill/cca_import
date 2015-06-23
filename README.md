@@ -20,6 +20,7 @@ Usage of ./cca_import:
   -endpoint="https://auth-east.cloud.ca/v2.0": The Cloud.ca object storage public url
   -identity="": Your Cloud.ca object storage identity
   -password="": Your Cloud.ca object storage password
+  -prefix="": A prefix to the path of each object uploaded to the bucket
 ```
 
 An example run would look like the following.
