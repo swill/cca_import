@@ -4,20 +4,7 @@ SUMMARY
 
 This is a cross platform tool which allows you to specify a directory and a bucket on the Cloud.ca object store and the directory will be uploaded to the specified bucket.  If the bucket does not exist, it will be created before uploading.
 
-The code is not required to use the script.  The executables are already available on Cloud.ca under `Files > cca_import`.
-
-
-INSTALL & SETUP
-===============
-
-If you want to run from source you would do the following.
-
-``` bash
-$ git clone http://git.cloudops.net/eng/cca_import.git
-$ cd cca_import
-$ go build
-$ ./cca_import -h
-```
+The code is not required to use the script.  The executables are already available on Cloud.ca Object Storage under `Files > tools > cca_import`.
 
 
 USAGE
@@ -29,7 +16,7 @@ The usage documentation for the script is accessible through the `-h` or `-help`
 $ ./cca_import -h
 Usage of ./cca_import:
   -bucket="": The container where the files should be uploaded
-  -dir="": Directory to be uploaded
+  -dir="": Absolute or relative path to a directory to be uploaded
   -endpoint="https://auth-east.cloud.ca/v2.0": The Cloud.ca object storage public url
   -identity="": Your Cloud.ca object storage identity
   -password="": Your Cloud.ca object storage password
@@ -64,6 +51,19 @@ $ ./cca_import -dir="/abs/or/rel/path/to/dir" -bucket="bucket_name" -identity="c
  uploaded: cca_import_solaris_amd64.zip
  uploaded: cca_import_windows_386.zip
  uploaded: cca_import_windows_amd64.zip
+```
+
+
+BUILDING FROM SOURCE
+====================
+
+If you want to run from source you would do the following.
+
+``` bash
+$ git clone http://git.cloudops.net/eng/cca_import.git
+$ cd cca_import
+$ go build
+$ ./cca_import -h
 ```
 
 
