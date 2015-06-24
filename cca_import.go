@@ -146,17 +146,19 @@ func main() {
 		dir_wg.Add(1)
 		go func(obj_path string) error {
 			defer dir_wg.Done()
-			obj, _, err := conn.Object(*bucket, obj_path)
-			if err == nil && obj.ContentType == "application/directory" {
-				fmt.Printf("unchanged: %s\n", obj_path)
-			} else {
-				err = conn.ObjectPutString(*bucket, obj_path, "", "application/directory")
-				if err != nil {
-					fmt.Printf("\nERROR: Problem creating folder '%s'\n", obj_path)
-					fmt.Println(err)
-					return err
+			if obj_path != "" {
+				obj, _, err := conn.Object(*bucket, obj_path)
+				if err == nil && obj.ContentType == "application/directory" {
+					fmt.Printf("unchanged: %s\n", obj_path)
+				} else {
+					err = conn.ObjectPutString(*bucket, obj_path, "", "application/directory")
+					if err != nil {
+						fmt.Printf("\nERROR: Problem creating folder '%s'\n", obj_path)
+						fmt.Println(err)
+						return err
+					}
+					fmt.Printf("added dir: %s\n", obj_path)
 				}
-				fmt.Printf("added dir: %s\n", obj_path)
 			}
 			return nil
 		}(p.obj_path)
