@@ -16,11 +16,12 @@ The usage documentation for the script is accessible through the `-h` or `-help`
 $ ./cca_import -h
 Usage of ./cca_import:
   -bucket="": The container where the files should be uploaded
+  -concurrent=4: The number of files to be uploaded concurrently (reduce if 'too many files open' errors occur)
   -dir="": Absolute or relative path to a directory to be uploaded
   -endpoint="https://auth-east.cloud.ca/v2.0": The Cloud.ca object storage public url
   -identity="": Your Cloud.ca object storage identity
   -password="": Your Cloud.ca object storage password
-  -prefix="": A prefix to the path of each object uploaded to the bucket
+  -prefix="": A prefix added to the path of each object uploaded to the bucket
 ```
 
 An example run would look like the following.

@@ -43,6 +43,7 @@ func main() {
 	identity := flag.String("identity", "", "Your Cloud.ca object storage identity")
 	password := flag.String("password", "", "Your Cloud.ca object storage password")
 	prefix := flag.String("prefix", "", "A prefix added to the path of each object uploaded to the bucket")
+	concurrent := flag.Int("concurrent", 4, "The number of files to be uploaded concurrently (reduce if 'too many files open' errors occur)")
 	flag.Parse()
 
 	if *dir == "" || *bucket == "" || *identity == "" || *password == "" {
@@ -163,39 +164,53 @@ func main() {
 	dir_wg.Wait()
 
 	// now upload all the objects into the established dirs
-	var obj_wg sync.WaitGroup
-	for _, p := range objs {
-		obj_wg.Add(1)
-		go func(path, obj_path string) error {
-			defer obj_wg.Done()
-			hash, err := getHash(path)
+	process_path := func(path, obj_path string) error {
+		hash, err := getHash(path)
+		if err != nil {
+			fmt.Printf("\nERROR: Problem creating object hash\n")
+			fmt.Println(err)
+			return err
+		}
+		obj, _, err := conn.Object(*bucket, obj_path)
+		if err != nil || obj.Hash != hash {
+			fmt.Printf("  started: %s\n", obj_path)
+			f, err := os.Open(path)
 			if err != nil {
-				fmt.Printf("\nERROR: Problem creating object hash\n")
+				fmt.Printf("\nERROR: Problem opening file '%s'\n", path)
 				fmt.Println(err)
 				return err
 			}
-			obj, _, err := conn.Object(*bucket, obj_path)
-			if err != nil || obj.Hash != hash {
-				fmt.Printf("  started: %s\n", obj_path)
-				f, err := os.Open(path)
-				if err != nil {
-					fmt.Printf("\nERROR: Problem opening file '%s'\n", path)
-					fmt.Println(err)
-					return err
-				}
-				defer f.Close()
-				_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
-				if err != nil {
-					fmt.Printf("\nERROR: Problem uploading object '%s'\n", obj_path)
-					fmt.Println(err)
-					return err
-				}
-				fmt.Printf(" uploaded: %s\n", obj_path)
-			} else {
-				fmt.Printf(" unchanged: %s\n", obj_path)
+			defer f.Close()
+			_, err = conn.ObjectPut(*bucket, obj_path, f, true, hash, "", nil)
+			if err != nil {
+				fmt.Printf("\nERROR: Problem uploading object '%s'\n", obj_path)
+				fmt.Println(err)
+				return err
 			}
-			return nil
-		}(p.file_path, p.obj_path)
+			fmt.Printf(" uploaded: %s\n", obj_path)
+		} else {
+			fmt.Printf(" unchanged: %s\n", obj_path)
+		}
+		return nil
 	}
+
+	// setup 'process_path' concurrency controls
+	pathc := make(chan *Path)
+	var obj_wg sync.WaitGroup
+	// setup the number of concurrent goroutine workers
+	for i := 0; i < *concurrent; i++ {
+		obj_wg.Add(1)
+		go func() {
+			for p := range pathc {
+				process_path(p.file_path, p.obj_path)
+			}
+			obj_wg.Done()
+		}()
+	}
+	// feed the paths into the concurrent goroutines to be executed
+	for _, p := range objs {
+		pathc <- p
+	}
+	close(pathc)
 	obj_wg.Wait()
 }
