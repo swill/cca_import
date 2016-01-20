@@ -2,15 +2,15 @@
 cca_import
 ==========
 
-This is a cross platform tool which allows you to specify a directory and a bucket on the Cloud.ca object store and the directory will be uploaded to the specified bucket.  If the bucket does not exist, it will be created before uploading.
+A cross platform tool which allows you to specify a directory and a bucket on the Cloud.ca object store and the directory will be uploaded to the specified bucket.  If the bucket does not exist, it will be created before uploading.
 
-The code is not required to use the script.  The executables are already available on Cloud.ca Object Storage under `Files > tools > cca_import`.
+The code is not required to use the tool, you can just grab the appropriate binary and use it.
 
 
 USAGE
 -----
 
-The usage documentation for the script is accessible through the `-h` or `-help` flags.
+The usage documentation for the tool is accessible through the `-h` or `-help` flags.
 
 ``` bash
 $ ./cca_import -h
@@ -62,7 +62,7 @@ BUILDING FROM SOURCE
 If you want to run from source you would do the following.
 
 ``` bash
-$ git clone http://git.cloudops.net/eng/cca_import.git
+$ git clone https://github.com/swill/cca_import.git
 $ cd cca_import
 $ go build
 $ ./cca_import -h
@@ -72,13 +72,11 @@ $ ./cca_import -h
 CROSS COMPILING
 ---------------
 
-Using the script from source is not ideal, instead it should be compiled and the executable should be distributed.  Since this is written in Go (golang), it will have to be compiled for each OS independently.  There is an excellent package called `goxc` which enables you to compile for all OS platforms at the same time.
-
-Learn more about installing `goxc` at: [https://github.com/laher/goxc](https://github.com/laher/goxc)
+Using the tool from source is not ideal, instead it should be cross compiled and the executables should be distributed.  Since this is written in Go (golang), it will have to be compiled for each OS independently.  A convenience script `_build.sh` has been added to the project to simplify the cross compilation process.
 
 Compilation process:
 ``` bash
 $ cd /path/to/cca_import
-$ goxc
+$ ./_build.sh
 ```
 
