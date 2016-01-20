@@ -7,6 +7,38 @@ A cross platform tool which allows you to specify a directory and a bucket on th
 The code is not required to use the tool, you can just grab the appropriate binary and use it.
 
 
+GET THE TOOL
+------------
+
+Download the compiled binary for your system from the list below.
+
+### 64 Bit
+
+**Windows:** https://github.com/swill/cca_import/blob/master/bin/cca_import_windows_amd64.exe
+**Mac OSX:** https://github.com/swill/cca_import/blob/master/bin/cca_import_darwin_amd64
+**Linux:**   https://github.com/swill/cca_import/blob/master/bin/cca_import_linux_amd64
+**FreeBSD:** https://github.com/swill/cca_import/blob/master/bin/cca_import_freebsd_amd64
+**OpenBSD:** https://github.com/swill/cca_import/blob/master/bin/cca_import_openbsd_amd64
+**NetBSD:**  https://github.com/swill/cca_import/blob/master/bin/cca_import_netbsd_amd64
+
+
+### 32 Bit
+
+**Windows:** https://github.com/swill/cca_import/blob/master/bin/cca_import_windows_386.exe
+**Mac OSX:** https://github.com/swill/cca_import/blob/master/bin/cca_import_darwin_386
+**Linux:**   https://github.com/swill/cca_import/blob/master/bin/cca_import_linux_386
+**FreeBSD:** https://github.com/swill/cca_import/blob/master/bin/cca_import_freebsd_386
+**OpenBSD:** https://github.com/swill/cca_import/blob/master/bin/cca_import_openbsd_386
+**NetBSD:**  https://github.com/swill/cca_import/blob/master/bin/cca_import_netbsd_386
+
+
+### ARM
+
+**Linux:**   https://github.com/swill/cca_import/blob/master/bin/cca_import_linux_arm
+**FreeBSD:** https://github.com/swill/cca_import/blob/master/bin/cca_import_freebsd_arm
+**NetBSD:**  https://github.com/swill/cca_import/blob/master/bin/cca_import_netbsd_arm
+
+
 USAGE
 -----
 
@@ -27,32 +59,40 @@ Usage of ./cca_import:
 An example run would look like the following.
 
 ```
-$ ./cca_import -dir="/abs/or/rel/path/to/dir" -bucket="bucket_name" -identity="check_your_profile" -password="check_your_profile"
- uploaded: cca_import_darwin_386.zip
- uploaded: cca_import_darwin_amd64.zip
- uploaded: cca_import_dragonfly_386.zip
- uploaded: cca_import_dragonfly_amd64.zip
- uploaded: cca_import_freebsd_386.zip
- uploaded: cca_import_freebsd_amd64.zip
- uploaded: cca_import_freebsd_arm.zip
- uploaded: cca_import_linux_386.tar.gz
- uploaded: cca_import_linux_amd64.tar.gz
- uploaded: cca_import_linux_arm.tar.gz
- uploaded: cca_import_nacl_386.zip
- uploaded: cca_import_nacl_amd64p32.zip
- uploaded: cca_import_nacl_arm.zip
- uploaded: cca_import_netbsd_386.zip
- uploaded: cca_import_netbsd_amd64.zip
- uploaded: cca_import_netbsd_arm.zip
- uploaded: cca_import_openbsd_386.zip
- uploaded: cca_import_openbsd_amd64.zip
- uploaded: cca_import_plan9_386.zip
- uploaded: cca_import_snapshot_amd64.deb
- uploaded: cca_import_snapshot_armhf.deb
- uploaded: cca_import_snapshot_i386.deb
- uploaded: cca_import_solaris_amd64.zip
- uploaded: cca_import_windows_386.zip
- uploaded: cca_import_windows_amd64.zip
+$ cca_import -dir="." -bucket="tools" -prefix="cca_import" -identity="my_identity" -password="my_password"
+Using bucket: tools
+Starting upload...  This can take a while, go get a coffee.  :)
+added dir: cca_import
+  started: cca_import/cca_import_darwin_386
+  started: cca_import/cca_import_freebsd_386
+  started: cca_import/cca_import_darwin_amd64
+  started: cca_import/cca_import_freebsd_amd64
+ uploaded: cca_import/cca_import_freebsd_386
+  started: cca_import/cca_import_freebsd_arm
+ uploaded: cca_import/cca_import_darwin_386
+  started: cca_import/cca_import_linux_386
+ uploaded: cca_import/cca_import_freebsd_amd64
+ uploaded: cca_import/cca_import_darwin_amd64
+  started: cca_import/cca_import_linux_amd64
+  started: cca_import/cca_import_linux_arm
+ uploaded: cca_import/cca_import_freebsd_arm
+  started: cca_import/cca_import_netbsd_386
+ uploaded: cca_import/cca_import_linux_386
+  started: cca_import/cca_import_netbsd_amd64
+ uploaded: cca_import/cca_import_linux_arm
+  started: cca_import/cca_import_netbsd_arm
+ uploaded: cca_import/cca_import_linux_amd64
+  started: cca_import/cca_import_openbsd_386
+ uploaded: cca_import/cca_import_netbsd_386
+  started: cca_import/cca_import_openbsd_amd64
+ uploaded: cca_import/cca_import_netbsd_arm
+  started: cca_import/cca_import_windows_386.exe
+ uploaded: cca_import/cca_import_netbsd_amd64
+  started: cca_import/cca_import_windows_amd64.exe
+ uploaded: cca_import/cca_import_openbsd_386
+ uploaded: cca_import/cca_import_windows_386.exe
+ uploaded: cca_import/cca_import_openbsd_amd64
+ uploaded: cca_import/cca_import_windows_amd64.exe
 ```
 
 
