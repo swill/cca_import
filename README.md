@@ -68,37 +68,36 @@ An example run would look like the following.
 $ ./cca_import -dir="." -bucket="tools" -prefix="cca_import" -identity="my_identity" -password="my_password"
 Using bucket: tools
 Starting upload...  This can take a while, go get a coffee.  :)
-added dir: cca_import
-  started: cca_import/cca_import_darwin_386
-  started: cca_import/cca_import_freebsd_386
   started: cca_import/cca_import_darwin_amd64
-  started: cca_import/cca_import_freebsd_amd64
+  started: cca_import/cca_import_freebsd_386
  uploaded: cca_import/cca_import_freebsd_386
+ uploaded: cca_import/cca_import_darwin_amd64
+  started: cca_import/cca_import_darwin_386
   started: cca_import/cca_import_freebsd_arm
+  started: cca_import/cca_import_freebsd_amd64
+ uploaded: cca_import/cca_import_freebsd_arm
  uploaded: cca_import/cca_import_darwin_386
   started: cca_import/cca_import_linux_386
- uploaded: cca_import/cca_import_freebsd_amd64
- uploaded: cca_import/cca_import_darwin_amd64
   started: cca_import/cca_import_linux_amd64
-  started: cca_import/cca_import_linux_arm
- uploaded: cca_import/cca_import_freebsd_arm
-  started: cca_import/cca_import_netbsd_386
+ uploaded: cca_import/cca_import_freebsd_amd64
  uploaded: cca_import/cca_import_linux_386
-  started: cca_import/cca_import_netbsd_amd64
- uploaded: cca_import/cca_import_linux_arm
-  started: cca_import/cca_import_netbsd_arm
  uploaded: cca_import/cca_import_linux_amd64
-  started: cca_import/cca_import_openbsd_386
+  started: cca_import/cca_import_netbsd_386
+  started: cca_import/cca_import_netbsd_amd64
  uploaded: cca_import/cca_import_netbsd_386
-  started: cca_import/cca_import_openbsd_amd64
+  started: cca_import/cca_import_netbsd_arm
+added dir: cca_import
  uploaded: cca_import/cca_import_netbsd_arm
-  started: cca_import/cca_import_windows_386.exe
+  started: cca_import/cca_import_linux_arm
+ uploaded: cca_import/cca_import_linux_arm
  uploaded: cca_import/cca_import_netbsd_amd64
+ unchanged: cca_import/cca_import_windows_386.exe
   started: cca_import/cca_import_windows_amd64.exe
- uploaded: cca_import/cca_import_openbsd_386
- uploaded: cca_import/cca_import_windows_386.exe
+  started: cca_import/cca_import_openbsd_amd64
  uploaded: cca_import/cca_import_openbsd_amd64
  uploaded: cca_import/cca_import_windows_amd64.exe
+  started: cca_import/cca_import_openbsd_386
+ uploaded: cca_import/cca_import_openbsd_386
 ```
 
 
