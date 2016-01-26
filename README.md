@@ -12,37 +12,12 @@ GET THE TOOL
 
 Download the compiled binary for your system from the list below.
 
-### 64 Bit
-
-|   OS    | Download Link                                                                     |
-|:-------:|:----------------------------------------------------------------------------------|
-| Windows | https://github.com/swill/cca_import/raw/master/bin/cca_import_windows_amd64.exe   |
-| Mac OSX | https://github.com/swill/cca_import/raw/master/bin/cca_import_darwin_amd64        |
-| Linux   | https://github.com/swill/cca_import/raw/master/bin/cca_import_linux_amd64         |
-| FreeBSD | https://github.com/swill/cca_import/raw/master/bin/cca_import_freebsd_amd64       |
-| OpenBSD | https://github.com/swill/cca_import/raw/master/bin/cca_import_openbsd_amd64       |
-| NetBSD  | https://github.com/swill/cca_import/raw/master/bin/cca_import_netbsd_amd64        |
-
-
-### 32 Bit
-
-|   OS    | Download Link                                                                     |
-|:-------:|:----------------------------------------------------------------------------------|
-| Windows | https://github.com/swill/cca_import/raw/master/bin/cca_import_windows_386.exe     |
-| Mac OSX | https://github.com/swill/cca_import/raw/master/bin/cca_import_darwin_386          |
-| Linux   | https://github.com/swill/cca_import/raw/master/bin/cca_import_linux_386           |
-| FreeBSD | https://github.com/swill/cca_import/raw/master/bin/cca_import_freebsd_386         |
-| OpenBSD | https://github.com/swill/cca_import/raw/master/bin/cca_import_openbsd_386         |
-| NetBSD  | https://github.com/swill/cca_import/raw/master/bin/cca_import_netbsd_386          |
-
-
-### ARM
-
-|   OS    | Download Link                                                                     |
-|:-------:|:----------------------------------------------------------------------------------|
-| Linux   | https://github.com/swill/cca_import/raw/master/bin/cca_import_linux_arm           |
-| FreeBSD | https://github.com/swill/cca_import/raw/master/bin/cca_import_freebsd_arm         |
-| NetBSD  | https://github.com/swill/cca_import/raw/master/bin/cca_import_netbsd_arm          |
+**Windows:** [64 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_windows_amd64.exe ), [32 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_windows_386.exe)  
+**Mac OSX:** [64 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_darwin_amd64), [32 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_darwin_386)  
+**Linux:** [64 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_linux_amd64), [32 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_linux_386), [ARM](https://github.com/swill/cca_import/raw/master/bin/cca_import_linux_arm)  
+**FreeBSDS:** [64 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_freebsd_amd64), [32 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_freebsd_386), [ARM](https://github.com/swill/cca_import/raw/master/bin/cca_import_freebsd_arm)  
+**OpenBSDS:** [64 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_openbsd_amd64), [32 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_openbsd_386)  
+**NetBSDS:** [64 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_netbsd_amd64), [32 bit](https://github.com/swill/cca_import/raw/master/bin/cca_import_netbsd_386), [ARM](https://github.com/swill/cca_import/raw/master/bin/cca_import_netbsd_arm)  
 
 
 USAGE
