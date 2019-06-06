@@ -4,12 +4,13 @@ import (
 	"crypto/md5"
 	"flag"
 	"fmt"
-	"github.com/ncw/swift"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
+
+	"github.com/ncw/swift"
 )
 
 type Path struct {
@@ -22,7 +23,7 @@ var (
 	conn       swift.Connection
 	dir        = flag.String("dir", "", "Absolute or relative path to a directory to be uploaded")
 	bucket     = flag.String("bucket", "", "The container where the files should be uploaded")
-	endpoint   = flag.String("endpoint", "https://auth-east.cloud.ca/v2.0", "The Cloud.ca object storage public url")
+	endpoint   = flag.String("endpoint", "https://auth.cloud.ca/v2.0", "The Cloud.ca object storage public url")
 	identity   = flag.String("identity", "", "Your Cloud.ca object storage identity")
 	password   = flag.String("password", "", "Your Cloud.ca object storage password")
 	prefix     = flag.String("prefix", "", "A prefix added to the path of each object uploaded to the bucket")
